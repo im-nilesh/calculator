@@ -59,7 +59,7 @@ class _CalculatorState extends State<Calculator> {
             color: Color.fromARGB(166, 109, 134, 245), fontSize: 25),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -109,7 +109,55 @@ class _CalculatorState extends State<Calculator> {
                 calcbutton(
                     "9", const Color.fromARGB(255, 239, 52, 52), Colors.black),
                 calcbutton(
-                    "x", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                    "X", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                calcbutton(
+                    "4", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                calcbutton(
+                    "5", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                calcbutton(
+                    "6", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                calcbutton(
+                    "-", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                calcbutton(
+                    "1", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                calcbutton(
+                    "2", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                calcbutton(
+                    "3", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                calcbutton(
+                    "+", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                calcbutton(
+                    "0", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                calcbutton(
+                    ".", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                calcbutton(
+                    "?", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                calcbutton(
+                    "=", const Color.fromARGB(255, 239, 52, 52), Colors.black),
               ],
             ),
           ],
