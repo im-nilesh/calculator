@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
   runApp(const MyApp());
@@ -68,7 +69,7 @@ class _CalculatorState extends State<Calculator> {
               scrollDirection: Axis.vertical,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [
+                children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
@@ -88,8 +89,8 @@ class _CalculatorState extends State<Calculator> {
               children: <Widget>[
                 calcbutton(
                     "AC", const Color.fromARGB(255, 239, 52, 52), Colors.black),
-                calcbutton(
-                    "C", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                calcbutton("+/-", const Color.fromARGB(255, 239, 52, 52),
+                    Colors.black),
                 calcbutton(
                     "%", const Color.fromARGB(255, 239, 52, 52), Colors.black),
                 calcbutton(
@@ -150,14 +151,23 @@ class _CalculatorState extends State<Calculator> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
+                //this is button zero
+                ElevatedButton(
+                  onPressed: () {
+                    calculation('0');
+                  },
+                  child: const Text(
+                    '0',
+                    style: TextStyle(
+                      fontSize: 35,
+                      color: Color.fromARGB(255, 239, 52, 52),
+                    ),
+                  ),
+                ),
                 calcbutton(
-                    "0", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                    '.', const Color.fromARGB(255, 239, 52, 52), Colors.white),
                 calcbutton(
-                    ".", const Color.fromARGB(255, 239, 52, 52), Colors.black),
-                calcbutton(
-                    "?", const Color.fromARGB(255, 239, 52, 52), Colors.black),
-                calcbutton(
-                    "=", const Color.fromARGB(255, 239, 52, 52), Colors.black),
+                    '=', const Color.fromARGB(255, 239, 52, 52), Colors.white),
               ],
             ),
             const SizedBox(
@@ -192,14 +202,14 @@ class _CalculatorState extends State<Calculator> {
         finalResult = add();
       } else if (preOpr == '-') {
         finalResult = sub();
-      } else if (preOpr == 'x') {
+      } else if (preOpr == 'X') {
         finalResult = mul();
       } else if (preOpr == '/') {
         finalResult == div();
       }
     } else if (btntxt == '+' ||
         btntxt == '-' ||
-        btntxt == 'x' ||
+        btntxt == 'X' ||
         btntxt == '/' ||
         btntxt == '=') {
       if (numOne == 0) {
@@ -209,33 +219,77 @@ class _CalculatorState extends State<Calculator> {
       }
 
       if (opr == '+') {
-        finalResult = add();
+        setState(() {
+          finalResult = add();
+        });
       } else if (opr == '-') {
-        finalResult == sub();
-      } else if (opr == 'x') {
-        finalResult == mul();
+        setState(() {
+          finalResult = sub();
+        });
+      } else if (opr == 'X') {
+        setState(() {
+          finalResult = mul();
+        });
       } else if (opr == '/') {
-        finalResult == div();
+        setState(() {
+          finalResult = div();
+        });
       }
       preOpr = opr;
       opr = btntxt;
       result = '';
+    } else if (btntxt == '%') {
+      result = numOne / 100;
+      finalResult = doesContainDecimal(result);
+    } else if (btntxt == '.') {
+      if (!result.toString().contains('.')) {
+        result = result.toString() + '.';
+      }
+      finalResult = result;
+    } else if (btntxt == '+/-') {
+      result.toString().startsWith('-')
+          ? result = result.toString().substring(1)
+          : result = '-' + result.toString();
+      finalResult = result;
+    } else {
+      result = result + btntxt;
+      finalResult = result;
     }
+    setState(() {
+      text = finalResult;
+    });
   }
 
   String add() {
-    return '1';
+    result = (numOne + numTwo).toString();
+    numOne = double.parse(result);
+    return doesContainDecimal(result);
   }
 
   String sub() {
-    return '1'; //comment
+    result = (numOne - numTwo).toString();
+    numOne = double.parse(result);
+    return doesContainDecimal(result);
   }
 
   String mul() {
-    return '1';
+    result = (numOne * numTwo).toString();
+    numOne = double.parse(result);
+    return doesContainDecimal(result);
   }
 
   String div() {
-    return '1';
+    result = (numOne / numTwo).toString();
+    numOne = double.parse(result);
+    return doesContainDecimal(result);
+  }
+
+  String doesContainDecimal(dynamic result) {
+    if (result.toString().contains('.')) {
+      List<String> splitDecimal = result.toString().split('.');
+      if (!(int.parse(splitDecimal[1]) > 0))
+        return result = splitDecimal[0].toString();
+    }
+    return result;
   }
 }
